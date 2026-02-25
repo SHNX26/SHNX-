@@ -5,66 +5,63 @@
     <title>مختبر ربط البيانات - أسامة</title>
     <style>
         body { font-family: sans-serif; background: #121212; color: white; padding: 20px; }
-        .data-card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
-        .status { color: #4CAF50; font-weight: bold; margin-bottom: 20px; }
-        .error { color: #ff5252; }
+        .data-card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-right: 4px solid #E50914; }
+        .status { font-weight: bold; margin-bottom: 20px; padding: 15px; border-radius: 5px; background: rgba(255, 255, 255, 0.05); }
+        .success { color: #4CAF50; border: 1px solid #4CAF50; }
+        .error { color: #ff5252; border: 1px solid #ff5252; }
     </style>
 </head>
 <body>
 
-    <h2>مختبر سحب بيانات Google Sheets 🧪</h2>
-    <div id="status" class="status">جاري الاتصال بجوجل...</div>
+    <h2>مختبر سحب البيانات 🧪</h2>
+    <div id="status" class="status" style="color: #FFC107;">⏳ جاري الاتصال بالسيرفر...</div>
     <div id="output"></div>
 
     <script>
-        // رابط ملفك اللي أرسلته لي (بصيغة CSV)
-        const sheetURL = "https://docs.google.com/spreadsheets/d/1UChkTwIZFxkwV0vDepyNcWNe0Gb6eSbpDajdWX5mvOE/gviz/tq?tqx=out:csv";
+        // استخدام طريقتك الذكية لتخطي حماية جوجل
+        const sheetID = "1UChkTwIZFxkwV0vDepyNcWNe0Gb6eSbpDajdWX5mvOE";
+        
+        // تم التعديل هنا إلى Sheet1 بناءً على تغييرك
+        const sheetName = "Sheet1"; 
+        const sheetURL = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
 
         async function testConnection() {
             const output = document.getElementById('output');
             const status = document.getElementById('status');
 
             try {
-                // 1. طلب البيانات من جوجل
                 const response = await fetch(sheetURL);
                 
-                if (!response.ok) throw new Error("فشل الوصول للملف، تأكد من صلاحيات المشاركة");
+                if (!response.ok) {
+                    throw new Error("فشل الاتصال! تأكد من أن اسم الورقة تحت في الشيت هو Sheet1 تماماً بدون مسافات إضافية.");
+                }
 
-                const csvData = await response.text();
+                const data = await response.json();
                 
-                // 2. معالجة النص القادم وتحويله لصفوف
-                const rows = csvData.split('\n');
+                status.innerHTML = "✅ <b>تم سحب البيانات بنجاح! اقتراحك كان في محله.</b>";
+                status.className = "status success";
+                output.innerHTML = ""; 
                 
-                status.innerText = "✅ تم سحب البيانات بنجاح! إليك النتائج:";
-                
-                // 3. عرض البيانات في الصفحة
-                output.innerHTML = ""; // تنظيف المكان
-                
-                rows.forEach((row, index) => {
-                    // نتجاهل أول سطر لأنه العنوان (Header)
-                    if (index === 0) return;
-
-                    const columns = row.split(',');
-                    if (columns.length >= 3) {
+                // جلب البيانات بناءً على أسماء الأعمدة اللي كتبتها أنت في الشيت
+                data.forEach(row => {
+                    if (row.series && row.episode && row.link) {
                         const div = document.createElement('div');
                         div.className = "data-card";
                         div.innerHTML = `
-                            <strong>المسلسل:</strong> ${columns[0]} <br>
-                            <strong>الحلقة:</strong> ${columns[1]} <br>
-                            <strong>الرابط:</strong> <span style="color: #2196F3;">${columns[2]}</span>
+                            <strong>المسلسل:</strong> ${row.series} <br><br>
+                            <strong>الحلقة:</strong> ${row.episode} <br><br>
+                            <strong>الرابط:</strong> <a href="${row.link}" target="_blank" style="color: #2196F3; word-break: break-all;">${row.link}</a>
                         `;
                         output.appendChild(div);
                     }
                 });
 
             } catch (err) {
-                status.innerText = "❌ حدث خطأ في الاتصال";
+                status.innerHTML = `❌ <b>حدث خطأ:</b><br><br> ${err.message}`;
                 status.className = "status error";
-                output.innerHTML = `<p>${err.message}</p>`;
             }
         }
 
-        // تشغيل الاختبار فور فتح الصفحة
         testConnection();
     </script>
 </body>
