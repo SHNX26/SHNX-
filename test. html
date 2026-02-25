@@ -18,7 +18,7 @@
 
     <script>
         // رابط ملفك اللي أرسلته لي (بصيغة CSV)
-        const sheetURL = "https://docs.google.com/spreadsheets/d/1UChkTwIZFxkwV0vDepyNcWNe0Gb6eSbpDajdWX5mvOE/export?format=csv";
+        const sheetURL = "https://docs.google.com/spreadsheets/d/1UChkTwIZFxkwV0vDepyNcWNe0Gb6eSbpDajdWX5mvOE/gviz/tq?tqx=out:csv";
 
         async function testConnection() {
             const output = document.getElementById('output');
