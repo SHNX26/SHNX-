@@ -260,6 +260,43 @@
             }
         };
 
+        // --- كود جلب الحلقات من Google Sheet ودمجها ---
+const sheetID = "1UChkTwIZFxkwV0vDepyNcWNe0Gb6eSbpDajdWX5mvOE";
+const sheetName = "Sheet1"; 
+const sheetURL = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
+
+async function loadEpisodesAndRender() {
+    try {
+        const response = await fetch(sheetURL);
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            // دمج البيانات الجديدة مع linksDB القديمة
+            data.forEach(row => {
+                if (row.series && row.episode && row.link) {
+                    // إذا المسلسل مو موجود، أنشئ له سجل جديد
+                    if (!linksDB[row.series]) {
+                        linksDB[row.series] = {};
+                    }
+                    // إضافة أو تحديث رابط الحلقة
+                    linksDB[row.series][row.episode] = row.link;
+                }
+            });
+            console.log("✅ تم دمج الحلقات من جوجل شيت بنجاح");
+        }
+    } catch (error) {
+        console.error("❌ فشل سحب الحلقات الجديدة، سيتم العمل بالحلقات القديمة فقط", error);
+    } finally {
+        // تشغيل واجهة الموقع سواء نجح السحب أو فشل
+        renderHome(); 
+    }
+}
+
+// تشغيل محرك سحب البيانات
+loadEpisodesAndRender();
+
+        
         function renderHome() {
             seriesDB.forEach(s => {
                 let listId = s.cat === "trending" ? "list-trending" : (s.cat === "comedy" ? "list-comedy" : "list-drama");
@@ -411,7 +448,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        renderHome();
+        
     </script> 
     
 </body>
