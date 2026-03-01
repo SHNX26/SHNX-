@@ -281,7 +281,11 @@
         const sheetName = "Sheet1"; 
         const sheetURL = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
 
-        async function loadEpisodesAndRender() {
+                // 1. تشغيل واجهة الموقع فوراً بدون أي انتظار
+        renderHome();
+
+        // 2. تحديث الحلقات الجديدة في الخلفية بصمت
+        async function loadEpisodesSilently() {
             try {
                 const response = await fetch(sheetURL);
                 if (response.ok) {
@@ -291,18 +295,20 @@
                             if (!linksDB[row.series]) {
                                 linksDB[row.series] = {};
                             }
+                            // تحديث الرابط بصمت
                             linksDB[row.series][row.episode] = row.link;
                         }
                     });
+                    console.log("✅ تم جلب الحلقات وتحديثها في الخلفية");
                 }
             } catch (error) {
-                console.error("❌ فشل سحب الحلقات الجديدة", error);
-            } finally {
-                renderHome(); 
+                console.error("❌ فشل سحب الحلقات في الخلفية", error);
             }
         }
 
-        loadEpisodesAndRender();
+        // استدعاء دالة التحديث الصامت
+        loadEpisodesSilently();
+
 
         function renderHome() {
             // إعداد البوستر الرئيسي
