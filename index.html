@@ -222,7 +222,7 @@
 
     <script>
         // --- 1. إعدادات الواجهة الرئيسية ---
-        const currentHero = {
+        let currentHero = {
             name: "شارع الأعشى 2",
             meta: "دراما • رمضان 2026 • حصري",
             img: "https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg"
@@ -316,6 +316,14 @@
                         }
                     });
                 }
+                    // هذا الكود يخلي البنر يعرض أحدث مسلسل ضفته
+                    if (seriesDB.length > 0) {
+                        currentHero = {
+                            name: seriesDB[0].name,
+                            meta: `${seriesDB[0].genre} • ${seriesDB[0].year} • حصري`,
+                            img: seriesDB[0].img
+                        };
+                    }
 
                 // سحب الحلقات الجديدة ودمجها مع القديمة
                 const resEps = await fetch(`https://opensheet.elk.sh/${sheetID}/${episodesSheet}`);
