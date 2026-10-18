@@ -233,7 +233,7 @@
 
    
       <!-- صفحة تفاصيل المسلسل -->
-    <button class="close-btn" onclick="closeDetails()">رجوع ➔</button>
+    <button id="back-btn" class="close-btn" style="display:none;" onclick="closeDetails()">رجوع ➔</button>
     <div id="details-page">
         <!-- زر الإغلاق الفخم الجديد -->
         
@@ -558,6 +558,7 @@
             const page = document.getElementById('details-page');
             if (page.style.display === 'block') {
                 closeDetails();
+                document.getElementById('back-btn').style.display = 'flex';
             }
         });
 
@@ -648,6 +649,7 @@
             document.body.style.overflow = 'auto';
             document.getElementById('searchInput').value = ""; 
             handleSearch();
+            document.getElementById('back-btn').style.display = 'none';
         }
 
     </script> 
