@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- 1. مظهر الرابط الفخم عند النشر (Meta Tags) -->
+    <meta property="og:title" content="SHNX | منصة المشاهدة الأولى">
+    <meta property="og:description" content="تابع أحدث المسلسلات الحصرية، كوميديا، دراما، وأكثر. مشاهدة ممتعة بدون إعلانات مزعجة!">
+    <meta property="og:image" content="https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg">
+    <meta property="og:url" content="https://shnx26.github.io/SHNX-/">
+    <meta property="og:type" content="website">
+
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,7 +35,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- شاشة التحميل --- */
         #loader {
             position: fixed; inset: 0; z-index: 99999;
             background-color: var(--bg);
@@ -43,8 +49,9 @@
         .fade-in { animation: fadeIn 0.5s forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* تعديل الـ Header ليبقى ظاهراً وفوق كل شيء */
         header { 
-            position: fixed; top: 0; width: 100%; height: 70px; z-index: 1000; 
+            position: fixed; top: 0; width: 100%; height: 70px; z-index: 3000; /* رفعنا الـ z-index */
             background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%); 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 0 5%; box-sizing: border-box; 
@@ -52,7 +59,6 @@
         }
         .logo { font-size: 28px; font-weight: 900; color: var(--accent); text-shadow: 0 0 15px rgba(229, 9, 20, 0.4); letter-spacing: 1px;}
 
-        /* ستايل شريط البحث المطور */
         .search-box {
             background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.05);
             border-radius: 20px; padding: 8px 15px; color: white; width: 140px; 
@@ -62,7 +68,6 @@
         .search-box:focus { width: 190px; background: rgba(0,0,0,0.6); border-color: var(--accent); box-shadow: 0 0 10px rgba(229,9,20,0.3); }
         .search-box::placeholder { color: #ccc; }
 
-        /* ستايل زر التيليجرام */
         .tg-fab { 
             position: fixed; bottom: 25px; left: 20px; z-index: 1000;
             background: #0088cc; color: white; padding: 12px 20px; 
@@ -77,6 +82,7 @@
             background-size: cover; background-position: center top; 
             display: flex; align-items: flex-end; 
             transition: background-image 0.5s ease-in-out;
+            padding-top: 70px; /* مسافة للـ Header */
         }
         .hero::after { 
             content: ''; position: absolute; inset: 0; 
@@ -92,11 +98,10 @@
         .btn-play-hero:hover { background: #e6e6e6; transform: scale(1.05); }
         .btn-play-hero:active { transform: scale(0.95); opacity: 0.8; }
 
-        .section-title { font-size: 20px; font-weight: 800; margin: 30px 5% 15px; border-right: 4px solid var(--accent); padding-right: 12px; }
+        .section-title { font-size: 20px; font-weight: 800; margin: 30px 5% 15px; border-right: 4px solid var(--accent); padding-right: 12px; display: flex; justify-content: space-between; align-items: center;}
         .scroll-list { display: flex; overflow-x: auto; padding: 10px 5% 30px; gap: 15px; scrollbar-width: none; }
         .scroll-list::-webkit-scrollbar { display: none; }
         
-        /* تأثيرات نتفليكس على الكروت */
         .card { 
             min-width: 130px; position: relative; cursor: pointer; 
             border-radius: 6px; transition: var(--transition);
@@ -106,8 +111,6 @@
             width: 100%; height: 190px; border-radius: 6px; object-fit: cover; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: var(--transition);
         }
-        
-        /* غطاء أسود يظهر عند اللمس/التمرير */
         .card::after {
             content: ''; position: absolute; inset: 0; border-radius: 6px;
             background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 50%);
@@ -120,30 +123,46 @@
         .continue-card { min-width: 200px; }
         .continue-card img { height: 120px; opacity: 0.8; }
 
-        #details-page { display: none; position: fixed; inset: 0; z-index: 2000; background: var(--bg); overflow-y: auto; }
-        #video-container { display: none; width: 100%; aspect-ratio: 16/9; background: #000; position: sticky; top: 0; z-index: 2100; box-shadow: 0 5px 20px rgba(0,0,0,0.9); }
+        #details-page { display: none; position: fixed; inset: 0; z-index: 2000; background: var(--bg); overflow-y: auto; padding-top: 70px; /* مسافة للـ Header */}
+        #video-container { display: none; width: 100%; aspect-ratio: 16/9; background: #000; position: sticky; top: 70px; z-index: 2100; box-shadow: 0 5px 20px rgba(0,0,0,0.9); }
         #video-container iframe { width: 100%; height: 100%; border: none; }
 
-        .details-hero { height: 50vh; background-size: cover; background-position: center top; position: relative; }
+        /* زر الحلقة التالية */
+        .next-ep-btn {
+            background: var(--surface); color: white; border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;
+            display: none; margin: 15px 5%; transition: var(--transition); text-align: center;
+        }
+        .next-ep-btn:active { background: var(--accent); border-color: var(--accent); transform: scale(0.98); }
+
+
+        .details-hero { height: 40vh; background-size: cover; background-position: center top; position: relative; margin-top: -70px;}
         .details-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--bg) 5%, transparent); }
 
-        /* تعديل زر الإغلاق النهائي (ثابت ولا يختفي) */
+        /* تعديل زر الإغلاق ليتناسب مع التصميم الجديد */
         .close-btn { 
-            position: fixed; top: 20px; left: 20px; z-index: 9999 !important; 
+            position: absolute; top: 15px; left: 15px; z-index: 10; 
             background: rgba(0,0,0,0.7); color: white; border: 2px solid rgba(255,255,255,0.2); 
             width: 42px; height: 42px; border-radius: 50%; font-size: 22px; font-weight: bold;
             backdrop-filter: blur(10px); cursor: pointer; transition: var(--transition);
-            transform: translateZ(0); display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
         .close-btn:active { transform: scale(0.9); background: var(--accent); border-color: var(--accent); }
 
-        .details-info { padding: 0 5%; transition: var(--transition); transform: translateY(-70px); position: relative; z-index: 5; }
-        .details-info.video-mode { transform: translateY(15px); }
+        .details-info { padding: 0 5%; transition: var(--transition); transform: translateY(-40px); position: relative; z-index: 5; }
+        .details-info.video-mode { transform: translateY(0); margin-top: 15px;}
         
-        /* تنسيق بيانات المسلسل */
-        .d-meta-tags { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .d-meta-tags { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center;}
         .meta-tag { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #ddd; }
         .meta-year { color: #46d369; font-weight: bold; font-size: 14px; }
+        
+        /* زر إضافتي لقائمتي */
+        .add-list-btn {
+            background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3);
+            padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer;
+            transition: var(--transition); display: flex; align-items: center; gap: 5px;
+        }
+        .add-list-btn.added { background: rgba(255,255,255,0.1); color: var(--accent); border-color: var(--accent); }
 
         .ep-item { display: flex; align-items: center; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 12px; gap: 15px; border: 1px solid transparent; transition: var(--transition); cursor: pointer;}
         .ep-item:hover { background: rgba(255,255,255,0.1); }
@@ -161,8 +180,9 @@
         <div class="spinner"></div>
     </div>
 
+    <!-- تم رفع الـ Header ليكون ثابتاً وفوق كل الصفحات -->
     <header id="main-header">
-        <div class="logo">SHNX</div>
+        <div class="logo" onclick="closeDetails()" style="cursor:pointer;">SHNX</div>
         <input type="text" id="searchInput" class="search-box" placeholder="بحث عن مسلسل..." onkeyup="handleSearch()">
     </header>
 
@@ -179,40 +199,49 @@
             </div>
         </div>
 
-        <div id="search-section" style="display:none; padding-top: 80px;">
+        <div id="search-section" style="display:none; padding-top: 20px;">
             <div class="section-title">نتائج البحث 🔍</div>
             <div class="scroll-list" id="list-search" style="flex-wrap: wrap;"></div>
         </div>
 
         <div id="main-categories">
             
+            <!-- قسم: أكمل المشاهدة -->
             <div id="continue-section" style="display:none;">
                 <div class="section-title">أكمل المشاهدة 🕒</div>
                 <div class="scroll-list" id="list-continue"></div>
             </div>
+            
+            <!-- قسم: قائمتي (My List) -->
+            <div id="mylist-section" style="display:none;">
+                <div class="section-title">قائمتي 📌</div>
+                <div class="scroll-list" id="list-mylist"></div>
+            </div>
 
-            <div class="section-title">رمضان 2026 🔥</div>
-            <div class="scroll-list" id="list-trending"></div>
-
-            <div class="section-title">كوميديا وضحك 😂</div>
-            <div class="scroll-list" id="list-comedy"></div>
-
-            <div class="section-title">دراما وتشويق 🎬</div>
-            <div class="scroll-list" id="list-drama"></div>
+            <!-- سيتم حقن الأقسام التلقائية هنا -->
+            <div id="dynamic-categories-container"></div>
+            
         </div>
     </div>
 
+    <!-- صفحة تفاصيل المسلسل -->
     <div id="details-page">
-        <button class="close-btn" onclick="closeDetails()">✕</button>
         <div id="video-container">
             <iframe id="video-frame" src="" allowfullscreen allow="autoplay; fullscreen" sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
         </div>
-        <div class="details-hero" id="d-hero"></div>
+        
+        <!-- زر الحلقة التالية -->
+        <button id="next-ep-btn" class="next-ep-btn" onclick="playNextEpisode()">⏭ تشغيل الحلقة التالية</button>
+
+        <div class="details-hero" id="d-hero">
+            <button class="close-btn" onclick="closeDetails()">✕</button>
+        </div>
         <div class="details-info" id="d-info-box">
             <h1 class="d-title" id="d-title" style="font-size: 34px; margin: 0 0 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);"></h1>
             
             <div class="d-meta-tags" id="d-meta">
-                </div>
+                <!-- سيتم الحقن هنا -->
+            </div>
 
             <p class="d-desc" id="d-desc" style="color: var(--text-sec); line-height: 1.8; margin-bottom: 30px; font-size: 15px;"></p>
             <h3 style="margin-bottom: 20px; border-right: 3px solid var(--accent); padding-right: 10px; font-size: 18px;">قائمة الحلقات</h3>
@@ -221,93 +250,71 @@
     </div>
 
     <script>
-        // --- 1. إعدادات الواجهة الرئيسية ---
         let currentHero = {
             name: "شارع الأعشى 2",
             meta: "دراما • رمضان 2026 • حصري",
             img: "https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg"
         };
 
-        // --- 2. قاعدة البيانات المحفوظة (مسلسلاتك القديمة بأمان) ---
         const seriesDB = [ 
-            { name: "شارع الأعشى 2", cat: "trending", year: "2026", genre: "دراما اجتماعية", img: "https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg", desc: "بعد نجاح الجزء الأول، تستمر الحكايات والصراعات في أزقة شارع الأعشى العريق، لتكشف عن أسرار جديدة ومواقف تحبس الأنفاس." },
-            { name: "شباب البومب 14", cat: "trending", year: "2026", genre: "كوميديا شبابية", img: "https://i.postimg.cc/CMQqZ9FF/20260222-143351.jpg", desc: "يعود عامر والعيال في موسم جديد مليء بالمواقف الكوميدية التي تعكس واقع الشباب وقضاياهم بأسلوب ساخر وخفيف." },
-            { name: "جاك العلم 3", cat: "trending", year: "2026", genre: "كوميديا عائلية", img: "https://i.ibb.co/KxnpLcmd/76ca87a1-5326-42e9-9af4-39592736f2f6.jpg", desc: "أبو صامل وأم صامل في مغامرات يومية لا تنتهي، ومفارقات مضحكة تسلط الضوء على الحياة الزوجية والمواقف العائلية الطريفة." },
-            { name: "كحيلان", cat: "trending", year: "2026", genre: "دراما بدوية", img: "https://i.postimg.cc/NfZXGXwB/20260216-144848.jpg", desc: "ملحمة بدوية درامية تحكي قصة الفارس الشجاع كحيلان، وصراعات القبائل على النفوذ والثأر في قلب الصحراء." },
-            { name: "يوميات رجل متزوج", cat: "comedy", year: "2026", genre: "كوميديا لايت", img: "https://i.postimg.cc/gjYCZr94/ca44856a-bf4d-4ac9-8014-85e9e2e35a12.jpg", desc: "كوميديا خفيفة ترصد المعاناة اليومية لزوج يحاول الموازنة بين طلبات زوجته وضغوطات الحياة بأسلوب فكاهي." },
-            { name: "الأم المتوحشة", cat: "drama", year: "2026", genre: "دراما وتشويق", img: "https://i.postimg.cc/NMzv5RKn/medium-1770800302871-ji-Ht-Y.jpg", desc: "دراما اجتماعية قوية تسلط الضوء على تضحيات أم تضطر لاتخاذ قرارات قاسية وصعبة لحماية أبنائها من قسوة المجتمع." },
-            { name: "رامز ليڤل", cat: "comedy", year: "2026", genre: "برامج مقالب", img: "https://i.postimg.cc/7Pj7wR7y/Picsart-26-02-16-15-20-13-051.jpg", desc: "مقالب رامز جلال تصل لمستوى جديد من الرعب والجنون، مع ضحايا جدد من نجوم الفن والرياضة." },
-            { name: "عايله مايله", cat: "comedy", year: "2026", genre: "كوميديا", img: "https://i.postimg.cc/bwx16RsB/20260216-152905.jpg", desc: "عائلة غريبة الأطوار تواجه مشاكل الحياة بطرق غير تقليدية ومضحكة جداً." },
-            { name: "حي الجراديه", cat: "drama", year: "2026", genre: "دراما اجتماعية", img: "https://i.postimg.cc/sDRsS9nH/4b996360-453d-4c18-ac83-b7ca05f8c5c1.jpg", desc: "قصص وحكايات من قلب الحي القديم، ترصد التحولات الاجتماعية وصراعات الجيران." },
-            { name: "غلط بنات", cat: "drama", year: "2026", genre: "دراما شبابية", img: "https://i.postimg.cc/sxWJ3CgW/20260216-153050.jpg", desc: "قصص اجتماعية واقعية تناقش الأخطاء والتحديات التي تواجه الفتيات في مقتبل العمر." },
-            { name: "بنات عبدالغني", cat: "drama", year: "2026", genre: "دراما عائلية", img: "https://i.postimg.cc/x8FXbCjh/20260216-165829.jpg", desc: "صراع الإرث والسلطة بين شقيقات بعد وفاة والدهن الثري، لتنفتح أبواب الخلافات والأطماع." },
-            { name: "الغميضه", cat: "drama", year: "2026", genre: "جريمة وغموض", img: "https://i.postimg.cc/CL7WVqPm/images-2.jpg", desc: "جريمة غامضة تقلب حياة قرية هادئة رأساً على عقب، ويبدأ البحث عن الجاني بين الجميع." },
-            { name: "عرس الجن", cat: "drama", year: "2026", genre: "رعب وإثارة", img: "https://i.postimg.cc/BZ7nK1rw/medium-1770800624050-p-Dil-Z.jpg", desc: "غموض وتشويق يحيط بحفل زفاف يتحول إلى كابوس مرعب تتدخل فيه قوى خفية." }, 
-            { name: "الحصة الأخيرة", cat: "comedy", year: "2026", genre: "برامج حوارية", img: "https://i.postimg.cc/2ySvhftX/20260222-125854.jpg", desc: "انضموا إلى هذا الفصل مع نجومكم المفضلين الذين يشاركون تجاربهم المدرسية لأول مرة ويأخذونكم في رحلة مليئة بالحنين إلى أيام الدراسة." }
+            { name: "شارع الأعشى 2", cat: "رمضان 2026", year: "2026", genre: "دراما اجتماعية", img: "https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg", desc: "بعد نجاح الجزء الأول، تستمر الحكايات والصراعات في أزقة شارع الأعشى العريق، لتكشف عن أسرار جديدة ومواقف تحبس الأنفاس." },
+            { name: "شباب البومب 14", cat: "رمضان 2026", year: "2026", genre: "كوميديا شبابية", img: "https://i.postimg.cc/CMQqZ9FF/20260222-143351.jpg", desc: "يعود عامر والعيال في موسم جديد مليء بالمواقف الكوميدية التي تعكس واقع الشباب وقضاياهم بأسلوب ساخر وخفيف." },
+            { name: "جاك العلم 3", cat: "رمضان 2026", year: "2026", genre: "كوميديا عائلية", img: "https://i.ibb.co/KxnpLcmd/76ca87a1-5326-42e9-9af4-39592736f2f6.jpg", desc: "أبو صامل وأم صامل في مغامرات يومية لا تنتهي، ومفارقات مضحكة تسلط الضوء على الحياة الزوجية والمواقف العائلية الطريفة." },
+            { name: "كحيلان", cat: "رمضان 2026", year: "2026", genre: "دراما بدوية", img: "https://i.postimg.cc/NfZXGXwB/20260216-144848.jpg", desc: "ملحمة بدوية درامية تحكي قصة الفارس الشجاع كحيلان، وصراعات القبائل على النفوذ والثأر في قلب الصحراء." },
+            { name: "يوميات رجل متزوج", cat: "كوميديا", year: "2026", genre: "كوميديا لايت", img: "https://i.postimg.cc/gjYCZr94/ca44856a-bf4d-4ac9-8014-85e9e2e35a12.jpg", desc: "كوميديا خفيفة ترصد المعاناة اليومية لزوج يحاول الموازنة بين طلبات زوجته وضغوطات الحياة بأسلوب فكاهي." },
+            { name: "الأم المتوحشة", cat: "دراما", year: "2026", genre: "دراما وتشويق", img: "https://i.postimg.cc/NMzv5RKn/medium-1770800302871-ji-Ht-Y.jpg", desc: "دراما اجتماعية قوية تسلط الضوء على تضحيات أم تضطر لاتخاذ قرارات قاسية وصعبة لحماية أبنائها من قسوة المجتمع." },
+            { name: "رامز ليڤل", cat: "كوميديا", year: "2026", genre: "برامج مقالب", img: "https://i.postimg.cc/7Pj7wR7y/Picsart-26-02-16-15-20-13-051.jpg", desc: "مقالب رامز جلال تصل لمستوى جديد من الرعب والجنون، مع ضحايا جدد من نجوم الفن والرياضة." },
+            { name: "عايله مايله", cat: "كوميديا", year: "2026", genre: "كوميديا", img: "https://i.postimg.cc/bwx16RsB/20260216-152905.jpg", desc: "عائلة غريبة الأطوار تواجه مشاكل الحياة بطرق غير تقليدية ومضحكة جداً." },
+            { name: "حي الجراديه", cat: "دراما", year: "2026", genre: "دراما اجتماعية", img: "https://i.postimg.cc/sDRsS9nH/4b996360-453d-4c18-ac83-b7ca05f8c5c1.jpg", desc: "قصص وحكايات من قلب الحي القديم، ترصد التحولات الاجتماعية وصراعات الجيران." },
+            { name: "غلط بنات", cat: "دراما", year: "2026", genre: "دراما شبابية", img: "https://i.postimg.cc/sxWJ3CgW/20260216-153050.jpg", desc: "قصص اجتماعية واقعية تناقش الأخطاء والتحديات التي تواجه الفتيات في مقتبل العمر." },
+            { name: "بنات عبدالغني", cat: "دراما", year: "2026", genre: "دراما عائلية", img: "https://i.postimg.cc/x8FXbCjh/20260216-165829.jpg", desc: "صراع الإرث والسلطة بين شقيقات بعد وفاة والدهن الثري، لتنفتح أبواب الخلافات والأطماع." },
+            { name: "الغميضه", cat: "دراما", year: "2026", genre: "جريمة وغموض", img: "https://i.postimg.cc/CL7WVqPm/images-2.jpg", desc: "جريمة غامضة تقلب حياة قرية هادئة رأساً على عقب، ويبدأ البحث عن الجاني بين الجميع." },
+            { name: "عرس الجن", cat: "دراما", year: "2026", genre: "رعب وإثارة", img: "https://i.postimg.cc/BZ7nK1rw/medium-1770800624050-p-Dil-Z.jpg", desc: "غموض وتشويق يحيط بحفل زفاف يتحول إلى كابوس مرعب تتدخل فيه قوى خفية." }, 
+            { name: "الحصة الأخيرة", cat: "كوميديا", year: "2026", genre: "برامج حوارية", img: "https://i.postimg.cc/2ySvhftX/20260222-125854.jpg", desc: "انضموا إلى هذا الفصل مع نجومكم المفضلين الذين يشاركون تجاربهم المدرسية لأول مرة ويأخذونكم في رحلة مليئة بالحنين إلى أيام الدراسة." }
         ];
 
         const linksDB = {
-            "شارع الأعشى 2": {
-                1: "//ok.ru/videoembed/11875516092673?nochat=1", 2: "//ok.ru/videoembed/11875531297025?nochat=1", 3: "//ok.ru/videoembed/11946725675265?nochat=1", 4: "//ok.ru/videoembed/11946738258177?nochat=1", 5: "//ok.ru/videoembed/11971203698945?nochat=1", 6: "//ok.ru/videoembed/11989770440961?nochat=1", 7: "https://ok.ru/videoembed/12022189134081?nochat=1"
-            },
-            "شباب البومب 14": {
-                1: "//ok.ru/videoembed/11876854206721?nochat=1", 2: "//ok.ru/videoembed/11946814673153?nochat=1", 3: "//ok.ru/videoembed/11921735815425?nochat=1", 4: "//ok.ru/videoembed/11970378338561?nochat=1", 5: "//ok.ru/videoembed/11984369094913?nochat=1", 6: "https://ok.ru/videoembed/12022187626753?nochat=1"
-            },
-            "جاك العلم 3": {
-                1: "//ok.ru/videoembed/11876881666305?nochat=1", 2: "//ok.ru/videoembed/11973935173889?nochat=1", 3: "//ok.ru/videoembed/11946770305281?nochat=1", 4: "//ok.ru/videoembed/11970340262145?nochat=1", 5: "https://ok.ru/videoembed/12011138978049?nochat=1", 6: "https://ok.ru/videoembed/12022190051585?nochat=1"
-            },
-            "كحيلان": {
-                1: "//ok.ru/videoembed/11877259874561?nochat=1", 2: "//ok.ru/videoembed/11877271867649?nochat=1", 3: "//ok.ru/videoembed/11970915406081?nochat=1", 4: "//ok.ru/videoembed/11970925170945?nochat=1", 5: "//ok.ru/videoembed/11970940965121?nochat=1", 6: "//ok.ru/videoembed/11987720016129?nochat=1", 7: "https://ok.ru/videoembed/12022192673025?nochat=1"
-            },
-            "يوميات رجل متزوج": {
-                1: "//ok.ru/videoembed/11974492033281?nochat=1", 2: "//ok.ru/videoembed/11974505730305?nochat=1", 3: "//ok.ru/videoembed/11946786492673?nochat=1", 4: "//ok.ru/videoembed/11974558290177?nochat=1", 5: "//ok.ru/videoembed/11984286322945?nochat=1", 6: "https://ok.ru/videoembed/12017835249921?nochat=1"
-            },
-            "رامز ليڤل": {
-                1: "//ok.ru/videoembed/11971267989761?nochat=1", 2: "//ok.ru/videoembed/11971283194113?nochat=1", 3: "//ok.ru/videoembed/11971299053825?nochat=1", 4: "https://ok.ru/videoembed/12011033071873?nochat=1"
-            },
-            "عايله مايله": {
-                1: "//ok.ru/videoembed/11979021422849?nochat=1", 2: "//ok.ru/videoembed/11979031253249?nochat=1", 3: "//ok.ru/videoembed/11979041804545?nochat=1", 4: "//ok.ru/videoembed/11979051503873?nochat=1", 5: "//ok.ru/videoembed/11979064217857?nochat=1", 6: "https://ok.ru/videoembed/12011125805313?nochat=1"
-            },
-            "غلط بنات": {
-                1: "//ok.ru/videoembed/11877199253761?nochat=1", 2: "//ok.ru/videoembed/11877224485121?nochat=1", 3: "//ok.ru/videoembed/11946871099649?nochat=1", 4: "//ok.ru/videoembed/11970809237761?nochat=1", 5: "//ok.ru/videoembed/11970820575489?nochat=1", 6: "//ok.ru/videoembed/11978952544513?nochat=1", 7: "https://ok.ru/videoembed/12017848881409?nochat=1"
-            },
-            "بنات عبدالغني": {
-                1: "//ok.ru/videoembed/11877298606337?nochat=1", 2: "//ok.ru/videoembed/11877316169985?nochat=1", 3: "//ok.ru/videoembed/11971058536705?nochat=1", 4: "//ok.ru/videoembed/11971076493569?nochat=1", 5: "//ok.ru/videoembed/11971094909185?nochat=1", 6: "https://ok.ru/videoembed/12011148546305?nochat=1"
-            },
-            "الغميضه": {
-                1: "//ok.ru/videoembed/11877036003585?nochat=1", 2: "//ok.ru/videoembed/11877046817025?nochat=1", 3: "//ok.ru/videoembed/11946930475265?nochat=1", 4: "//ok.ru/videoembed/11970507247873?nochat=1", 5: "//ok.ru/videoembed/11973971480833?nochat=1", 6: "https://ok.ru/videoembed/12011156738305?nochat=1"
-            },
-            "الأم المتوحشة": {
-                1: "//ok.ru/videoembed/11877332291841?nochat=1", 2: "//ok.ru/videoembed/11877351166209?nochat=1"
-            },
-            "عرس الجن": {
-                1: "//ok.ru/videoembed/11877366698241?nochat=1", 2: "//ok.ru/videoembed/11877380395265?nochat=1"
-            },
-            "حي الجراديه": {
-                1: "//ok.ru/videoembed/11877090857217?nochat=1", 2: "//ok.ru/videoembed/11877113729281?nochat=1", 3: "//ok.ru/videoembed/11946884993281?nochat=1", 4: "//ok.ru/videoembed/11970692780289?nochat=1", 5: "//ok.ru/videoembed/11970709033217?nochat=1", 6: "//ok.ru/videoembed/11978994684161?nochat=1", 7: "https://ok.ru/videoembed/12017863233793?nochat=1"
-            }, 
-            "الحصة الأخيرة": {
-                1: "//ok.ru/videoembed/11877062807809?nochat=1", 2: "//ok.ru/videoembed/11970553516289?nochat=1", 3: "//ok.ru/videoembed/11970582679809?nochat=1", 4: "//ok.ru/videoembed/11970597818625?nochat=1", 5: "//ok.ru/videoembed/11984614199553?nochat=1", 6: "https://ok.ru/videoembed/12022191296769?nochat=1"
-            }
+            "شارع الأعشى 2": { 1: "//ok.ru/videoembed/11875516092673?nochat=1", 2: "//ok.ru/videoembed/11875531297025?nochat=1", 3: "//ok.ru/videoembed/11946725675265?nochat=1", 4: "//ok.ru/videoembed/11946738258177?nochat=1", 5: "//ok.ru/videoembed/11971203698945?nochat=1", 6: "//ok.ru/videoembed/11989770440961?nochat=1", 7: "https://ok.ru/videoembed/12022189134081?nochat=1" },
+            "شباب البومب 14": { 1: "//ok.ru/videoembed/11876854206721?nochat=1", 2: "//ok.ru/videoembed/11946814673153?nochat=1", 3: "//ok.ru/videoembed/11921735815425?nochat=1", 4: "//ok.ru/videoembed/11970378338561?nochat=1", 5: "//ok.ru/videoembed/11984369094913?nochat=1", 6: "https://ok.ru/videoembed/12022187626753?nochat=1" },
+            "جاك العلم 3": { 1: "//ok.ru/videoembed/11876881666305?nochat=1", 2: "//ok.ru/videoembed/11973935173889?nochat=1", 3: "//ok.ru/videoembed/11946770305281?nochat=1", 4: "//ok.ru/videoembed/11970340262145?nochat=1", 5: "https://ok.ru/videoembed/12011138978049?nochat=1", 6: "https://ok.ru/videoembed/12022190051585?nochat=1" },
+            "كحيلان": { 1: "//ok.ru/videoembed/11877259874561?nochat=1", 2: "//ok.ru/videoembed/11877271867649?nochat=1", 3: "//ok.ru/videoembed/11970915406081?nochat=1", 4: "//ok.ru/videoembed/11970925170945?nochat=1", 5: "//ok.ru/videoembed/11970940965121?nochat=1", 6: "//ok.ru/videoembed/11987720016129?nochat=1", 7: "https://ok.ru/videoembed/12022192673025?nochat=1" },
+            "يوميات رجل متزوج": { 1: "//ok.ru/videoembed/11974492033281?nochat=1", 2: "//ok.ru/videoembed/11974505730305?nochat=1", 3: "//ok.ru/videoembed/11946786492673?nochat=1", 4: "//ok.ru/videoembed/11974558290177?nochat=1", 5: "//ok.ru/videoembed/11984286322945?nochat=1", 6: "https://ok.ru/videoembed/12017835249921?nochat=1" },
+            "رامز ليڤل": { 1: "//ok.ru/videoembed/11971267989761?nochat=1", 2: "//ok.ru/videoembed/11971283194113?nochat=1", 3: "//ok.ru/videoembed/11971299053825?nochat=1", 4: "https://ok.ru/videoembed/12011033071873?nochat=1" },
+            "عايله مايله": { 1: "//ok.ru/videoembed/11979021422849?nochat=1", 2: "//ok.ru/videoembed/11979031253249?nochat=1", 3: "//ok.ru/videoembed/11979041804545?nochat=1", 4: "//ok.ru/videoembed/11979051503873?nochat=1", 5: "//ok.ru/videoembed/11979064217857?nochat=1", 6: "https://ok.ru/videoembed/12011125805313?nochat=1" },
+            "غلط بنات": { 1: "//ok.ru/videoembed/11877199253761?nochat=1", 2: "//ok.ru/videoembed/11877224485121?nochat=1", 3: "//ok.ru/videoembed/11946871099649?nochat=1", 4: "//ok.ru/videoembed/11970809237761?nochat=1", 5: "//ok.ru/videoembed/11970820575489?nochat=1", 6: "//ok.ru/videoembed/11978952544513?nochat=1", 7: "https://ok.ru/videoembed/12017848881409?nochat=1" },
+            "بنات عبدالغني": { 1: "//ok.ru/videoembed/11877298606337?nochat=1", 2: "//ok.ru/videoembed/11877316169985?nochat=1", 3: "//ok.ru/videoembed/11971058536705?nochat=1", 4: "//ok.ru/videoembed/11971076493569?nochat=1", 5: "//ok.ru/videoembed/11971094909185?nochat=1", 6: "https://ok.ru/videoembed/12011148546305?nochat=1" },
+            "الغميضه": { 1: "//ok.ru/videoembed/11877036003585?nochat=1", 2: "//ok.ru/videoembed/11877046817025?nochat=1", 3: "//ok.ru/videoembed/11946930475265?nochat=1", 4: "//ok.ru/videoembed/11970507247873?nochat=1", 5: "//ok.ru/videoembed/11973971480833?nochat=1", 6: "https://ok.ru/videoembed/12011156738305?nochat=1" },
+            "الأم المتوحشة": { 1: "//ok.ru/videoembed/11877332291841?nochat=1", 2: "//ok.ru/videoembed/11877351166209?nochat=1" },
+            "عرس الجن": { 1: "//ok.ru/videoembed/11877366698241?nochat=1", 2: "//ok.ru/videoembed/11877380395265?nochat=1" },
+            "حي الجراديه": { 1: "//ok.ru/videoembed/11877090857217?nochat=1", 2: "//ok.ru/videoembed/11877113729281?nochat=1", 3: "//ok.ru/videoembed/11946884993281?nochat=1", 4: "//ok.ru/videoembed/11970692780289?nochat=1", 5: "//ok.ru/videoembed/11970709033217?nochat=1", 6: "//ok.ru/videoembed/11978994684161?nochat=1", 7: "https://ok.ru/videoembed/12017863233793?nochat=1" }, 
+            "الحصة الأخيرة": { 1: "//ok.ru/videoembed/11877062807809?nochat=1", 2: "//ok.ru/videoembed/11970553516289?nochat=1", 3: "//ok.ru/videoembed/11970582679809?nochat=1", 4: "//ok.ru/videoembed/11970597818625?nochat=1", 5: "//ok.ru/videoembed/11984614199553?nochat=1", 6: "https://ok.ru/videoembed/12022191296769?nochat=1" }
         };
 
-        // --- 3. التهيئة والدمج مع Google Sheets ---
         const sheetID = "1UChkTwIZFxkwV0vDepyNcWNe0Gb6eSbpDajdWX5mvOE";
         const episodesSheet = "Sheet1"; 
         const seriesSheet = "Series"; 
 
+        // متغيرات للتحكم في الحلقة الحالية والتالية
+        let currentlyPlayingSeries = "";
+        let currentlyPlayingEp = 0;
+
         async function initApp() {
             try {
-                // سحب المسلسلات الجديدة وإضافتها للقديمة
+                // سحب المسلسلات من الإكسل
                 const resSeries = await fetch(`https://opensheet.elk.sh/${sheetID}/${seriesSheet}`);
                 if (resSeries.ok) {
                     const newSeries = await resSeries.json();
                     newSeries.forEach(row => {
-                        // التأكد إن المسلسل مو موجود أصلاً عشان ما يتكرر
                         if (row.name && !seriesDB.find(s => s.name === row.name)) {
-                            seriesDB.unshift({ // يضيف المسلسل الجديد في بداية القائمة
+                            // تنظيف التصنيفات (تحويل القديمة لأسماء الأقسام الجديدة)
+                            let categoryName = row.cat;
+                            if(row.cat === 'trending') categoryName = 'رمضان 2026';
+                            if(row.cat === 'comedy') categoryName = 'كوميديا';
+                            if(row.cat === 'drama') categoryName = 'دراما';
+
+                            seriesDB.unshift({
                                 name: row.name,
-                                cat: row.cat || "trending",
+                                cat: categoryName || "عام",
                                 year: row.year || "2026",
                                 genre: row.genre || "دراما",
                                 img: row.img || "https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg",
@@ -316,16 +323,17 @@
                         }
                     });
                 }
-                    // هذا الكود يخلي البنر يعرض أحدث مسلسل ضفته
-                    if (seriesDB.length > 0) {
-                        currentHero = {
-                            name: seriesDB[0].name,
-                            meta: `${seriesDB[0].genre} • ${seriesDB[0].year} • حصري`,
-                            img: seriesDB[0].img
-                        };
-                    }
+                
+                // تحديث البنر العلوي بأحدث مسلسل
+                if (seriesDB.length > 0) {
+                    currentHero = {
+                        name: seriesDB[0].name,
+                        meta: `${seriesDB[0].genre} • ${seriesDB[0].year} • حصري`,
+                        img: seriesDB[0].img
+                    };
+                }
 
-                // سحب الحلقات الجديدة ودمجها مع القديمة
+                // سحب الحلقات
                 const resEps = await fetch(`https://opensheet.elk.sh/${sheetID}/${episodesSheet}`);
                 if (resEps.ok) {
                     const dataEps = await resEps.json();
@@ -337,9 +345,8 @@
                     });
                 }
             } catch (error) {
-                console.error("❌ فشل سحب البيانات من الإكسل", error);
+                console.error("❌ فشل سحب البيانات", error);
             } finally {
-                // إخفاء شاشة التحميل وعرض الموقع
                 document.getElementById('loader').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('loader').style.display = 'none';
@@ -349,37 +356,106 @@
             }
         }
 
-        // تشغيل التطبيق فوراً
         initApp();
 
-
         function renderHome() {
-            // إعداد البوستر الرئيسي
+            // إعداد البوستر
             document.getElementById('hero-section').style.backgroundImage = `url('${currentHero.img}')`;
             document.getElementById('hero-title').innerText = currentHero.name;
             document.getElementById('hero-meta').innerText = currentHero.meta;
             document.getElementById('hero-btn').onclick = () => openDetails(currentHero.name);
 
-            // تصفير القوائم أولاً لتجنب التكرار عند التحديث
-            document.getElementById('list-trending').innerHTML = '';
-            document.getElementById('list-comedy').innerHTML = '';
-            document.getElementById('list-drama').innerHTML = '';
+            // بناء الأقسام تلقائياً بناءً على التصنيفات (cat) الموجودة في قاعدة البيانات
+            const container = document.getElementById('dynamic-categories-container');
+            container.innerHTML = ''; 
 
-            // إعداد قوائم المسلسلات
-            seriesDB.forEach(s => {
-                let listId = s.cat === "trending" ? "list-trending" : (s.cat === "comedy" ? "list-comedy" : "list-drama");
-                let container = document.getElementById(listId);
-                if(container) {
+            // استخراج كل الأقسام الفريدة
+            const allCategories = [...new Set(seriesDB.map(s => s.cat))];
+
+            allCategories.forEach(categoryName => {
+                // إنشاء عنوان القسم
+                let titleDiv = document.createElement('div');
+                titleDiv.className = "section-title";
+                titleDiv.innerText = categoryName;
+                
+                // إنشاء حاوية الكروت
+                let listDiv = document.createElement('div');
+                listDiv.className = "scroll-list";
+                
+                // تصفية المسلسلات اللي تابعة لهذا القسم
+                const categorySeries = seriesDB.filter(s => s.cat === categoryName);
+                
+                categorySeries.forEach(s => {
                     let card = document.createElement('div');
                     card.className = "card";
                     card.onclick = () => openDetails(s.name);
-                    card.innerHTML = `<img src="${s.img}" alt="${s.name}">`;
-                    container.appendChild(card);
-                }
+                    card.innerHTML = `<img src="${s.img}" alt="${s.name}" loading="lazy">`;
+                    listDiv.appendChild(card);
+                });
+
+                container.appendChild(titleDiv);
+                container.appendChild(listDiv);
             });
+
             checkContinueWatching();
+            checkMyList();
         }
 
+        // --- ميزة: قائمتي ---
+        function toggleMyList(seriesName) {
+            let myList = JSON.parse(localStorage.getItem('shnx_mylist')) || [];
+            const index = myList.indexOf(seriesName);
+            
+            if (index === -1) {
+                myList.push(seriesName); // إضافة
+            } else {
+                myList.splice(index, 1); // إزالة
+            }
+            
+            localStorage.setItem('shnx_mylist', JSON.stringify(myList));
+            updateMyListBtn(seriesName);
+            checkMyList(); // تحديث الواجهة الرئيسية
+        }
+
+        function updateMyListBtn(seriesName) {
+            const btn = document.getElementById('add-list-btn');
+            if(!btn) return;
+            
+            let myList = JSON.parse(localStorage.getItem('shnx_mylist')) || [];
+            if (myList.includes(seriesName)) {
+                btn.innerHTML = `✓ في قائمتي`;
+                btn.classList.add('added');
+            } else {
+                btn.innerHTML = `➕ أضف لقائمتي`;
+                btn.classList.remove('added');
+            }
+        }
+
+        function checkMyList() {
+            let myList = JSON.parse(localStorage.getItem('shnx_mylist')) || [];
+            const section = document.getElementById('mylist-section');
+            const list = document.getElementById('list-mylist');
+            
+            if (myList.length > 0) {
+                section.style.display = 'block';
+                list.innerHTML = '';
+                
+                myList.reverse().forEach(name => {
+                    const s = seriesDB.find(x => x.name === name);
+                    if(s) {
+                        let card = document.createElement('div');
+                        card.className = "card";
+                        card.onclick = () => openDetails(s.name);
+                        card.innerHTML = `<img src="${s.img}" alt="${s.name}" loading="lazy">`;
+                        list.appendChild(card);
+                    }
+                });
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        // --- ميزة: أكمل المشاهدة ---
         function checkContinueWatching() {
             const data = localStorage.getItem('shnx_continue');
             const section = document.getElementById('continue-section');
@@ -411,6 +487,7 @@
             }, 100);
         }
 
+        // --- البحث ---
         function handleSearch() {
             const q = document.getElementById('searchInput').value.toLowerCase().trim();
             const mainCat = document.getElementById('main-categories');
@@ -442,11 +519,15 @@
                 mainCat.style.display = 'block';
                 hero.style.display = 'flex';
                 searchSec.style.display = 'none';
-                checkContinueWatching();
             }
         }
 
+        // --- فتح تفاصيل المسلسل ---
         function openDetails(name) {
+            // تنظيف شريط البحث عشان ما يعلق
+            document.getElementById('searchInput').value = "";
+            handleSearch();
+
             const data = seriesDB.find(s => s.name === name);
             if(!data) return;
 
@@ -456,14 +537,18 @@
             document.getElementById('d-desc').innerText = data.desc;
             document.getElementById('d-hero').style.backgroundImage = `url('${data.img}')`;
             
-            // حقن التصنيفات (سنة الإنتاج والنوع)
+            // حقن التصنيفات وزر الإضافة
             document.getElementById('d-meta').innerHTML = `
                 <span class="meta-year">${data.year}</span>
                 <span class="meta-tag">${data.genre}</span>
                 <span class="meta-tag">1080p HD</span>
+                <button id="add-list-btn" class="add-list-btn" onclick="toggleMyList('${data.name}')">➕ أضف لقائمتي</button>
             `;
+            
+            updateMyListBtn(data.name);
 
             document.getElementById('video-container').style.display = 'none';
+            document.getElementById('next-ep-btn').style.display = 'none';
             document.getElementById('d-hero').style.display = 'block';
             document.getElementById('d-info-box').classList.remove('video-mode');
             
@@ -472,14 +557,15 @@
             page.style.display = 'block';
             page.classList.add('fade-in');
             document.body.style.overflow = 'hidden';
+            page.scrollTo({top: 0});
         }
 
+        // --- عرض الحلقات ---
         function renderEpisodes(name) {
             const container = document.getElementById('d-episodes-list');
             container.innerHTML = "";
             
             const epData = linksDB[name] || {};
-            // نحدد أعلى رقم حلقة موجودة، أو نفترض 30 حلقة كحد أقصى لرمضان
             let maxEp = 30;
             const existingEps = Object.keys(epData).map(Number);
             if(existingEps.length > 0) {
@@ -503,6 +589,7 @@
             }
         }
 
+        // --- تشغيل الفيديو وزر الحلقة التالية ---
         function playVideo(url, el, epNum, seriesName) {
             document.getElementById('d-hero').style.display = 'none';
             const container = document.getElementById('video-container');
@@ -510,6 +597,11 @@
             document.getElementById('video-frame').src = url;
             document.getElementById('d-info-box').classList.add('video-mode');
             
+            // تحديث المتغيرات للحلقة التالية
+            currentlyPlayingSeries = seriesName;
+            currentlyPlayingEp = epNum;
+            checkNextEpisode();
+
             document.querySelectorAll('.ep-item').forEach(i => i.classList.remove('active'));
             if(el) el.classList.add('active');
             
@@ -529,10 +621,35 @@
             }
         }
 
+        function checkNextEpisode() {
+            const nextBtn = document.getElementById('next-ep-btn');
+            const nextEpNum = currentlyPlayingEp + 1;
+            const epData = linksDB[currentlyPlayingSeries] || {};
+            
+            if (epData[nextEpNum]) {
+                nextBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        function playNextEpisode() {
+            const nextEpNum = currentlyPlayingEp + 1;
+            const nextLink = linksDB[currentlyPlayingSeries][nextEpNum];
+            
+            if (nextLink) {
+                const epItems = document.querySelectorAll('#d-episodes-list .ep-item');
+                let el = epItems.length >= nextEpNum ? epItems[nextEpNum - 1] : null;
+                playVideo(nextLink, el, nextEpNum, currentlyPlayingSeries);
+            }
+        }
+
         function closeDetails() {
             document.getElementById('video-frame').src = "";
             document.getElementById('details-page').style.display = 'none';
             document.body.style.overflow = 'auto';
+            document.getElementById('searchInput').value = ""; // تنظيف البحث عند الخروج
+            handleSearch();
         }
 
     </script> 
