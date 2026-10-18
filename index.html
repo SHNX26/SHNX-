@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- 1. مظهر الرابط الفخم عند النشر (Meta Tags) -->
+    <!-- مظهر الرابط الفخم عند النشر (Meta Tags) -->
     <meta property="og:title" content="SHNX | منصة المشاهدة الأولى">
     <meta property="og:description" content="تابع أحدث المسلسلات الحصرية، كوميديا، دراما، وأكثر. مشاهدة ممتعة بدون إعلانات مزعجة!">
     <meta property="og:image" content="https://i.ibb.co/hJTvQBRJ/20260216-133106.jpg">
@@ -49,11 +49,11 @@
         .fade-in { animation: fadeIn 0.5s forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* تعديل الـ Header ليبقى ظاهراً وفوق كل شيء باستثناء زر الإغلاق الجديد */
+        /* تعديل الهيدر: جمعنا الشعار والبحث جنب بعض وخلينا اليسار فاضي */
         header { 
             position: fixed; top: 0; width: 100%; height: 70px; z-index: 3000;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%); 
-            display: flex; align-items: center; justify-content: space-between; 
+            display: flex; align-items: center; justify-content: flex-start; gap: 20px; 
             padding: 0 5%; box-sizing: border-box; 
             backdrop-filter: blur(2px);
         }
@@ -65,7 +65,7 @@
             outline: none; transition: var(--transition); font-family: inherit;
             backdrop-filter: blur(5px);
         }
-        .search-box:focus { width: 190px; background: rgba(0,0,0,0.6); border-color: var(--accent); box-shadow: 0 0 10px rgba(229,9,20,0.3); }
+        .search-box:focus { width: 180px; background: rgba(0,0,0,0.6); border-color: var(--accent); box-shadow: 0 0 10px rgba(229,9,20,0.3); }
         .search-box::placeholder { color: #ccc; }
 
         .tg-fab { 
@@ -125,19 +125,17 @@
 
         #details-page { display: none; position: fixed; inset: 0; z-index: 2000; background: var(--bg); overflow-y: auto; padding-top: 70px; }
         
-        /* التعديل الجذري للمشغل: يثبت تحت الهيدر وما يغطي على شيء */
         #video-container { 
             display: none; 
             width: 100%; 
             aspect-ratio: 16/9; 
             background: #000; 
-            position: relative; /* رجعناه للوضع الطبيعي */
+            position: relative;
             z-index: 2100; 
             box-shadow: 0 5px 20px rgba(0,0,0,0.9); 
         }
         #video-container iframe { width: 100%; height: 100%; border: none; }
 
-        /* زر الحلقة التالية */
         .next-ep-btn {
             background: var(--surface); color: white; border: 1px solid rgba(255,255,255,0.1);
             padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;
@@ -149,17 +147,18 @@
         .details-hero { height: 40vh; background-size: cover; background-position: center top; position: relative; margin-top: -70px;}
         .details-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--bg) 5%, transparent); }
 
-        /* زر الإغلاق صار فوق المشغل، ومكانه مدروس عشان ما يصدم في البحث */
+        /* زر الرجوع الفخم (شفاف ضبابي) */
         .close-btn { 
-            position: absolute; top: 15px; left: 15px; z-index: 3500; /* زِدنا الـ z-index عشان يتغلب على المشغل والبحث */
-            background: rgba(0,0,0,0.8); color: white; border: 2px solid rgba(255,255,255,0.1); 
-            width: 45px; height: 45px; border-radius: 50%; font-size: 20px; font-weight: bold;
-            backdrop-filter: blur(15px); cursor: pointer; transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            display: flex; align-items: center; justify-content: center;
+            position: fixed; top: 15px; left: 15px; z-index: 3500; 
+            background: rgba(255, 255, 255, 0.1); color: white; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: bold;
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; gap: 5px;
         }
-        .close-btn:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
-        .close-btn:active { transform: scale(0.9); }
+        .close-btn:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+        .close-btn:active { transform: scale(0.95); }
 
 
         .details-info { padding: 0 5%; transition: var(--transition); transform: translateY(-40px); position: relative; z-index: 5; }
@@ -169,7 +168,6 @@
         .meta-tag { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #ddd; }
         .meta-year { color: #46d369; font-weight: bold; font-size: 14px; }
         
-        /* زر إضافتي لقائمتي */
         .add-list-btn {
             background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3);
             padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer;
@@ -235,10 +233,9 @@
 
     <!-- صفحة تفاصيل المسلسل -->
     <div id="details-page">
-        <!-- زر الإغلاق نُقل إلى بداية الصفحة ليكون دائماً في الأعلى -->
-        <button class="close-btn" onclick="closeDetails()">✕</button>
+        <!-- زر الإغلاق الفخم الجديد -->
+        <button class="close-btn" onclick="closeDetails()">رجوع ➔</button>
 
-        <!-- حاوية المشغل -->
         <div id="video-container">
             <iframe id="video-frame" src="" allowfullscreen allow="autoplay; fullscreen" sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
         </div>
@@ -246,7 +243,6 @@
         <button id="next-ep-btn" class="next-ep-btn" onclick="playNextEpisode()">⏭ تشغيل الحلقة التالية</button>
 
         <div class="details-hero" id="d-hero">
-            <!-- تم نقل زر الإغلاق من هنا ليكون فوق المشغل -->
         </div>
         <div class="details-info" id="d-info-box">
             <h1 class="d-title" id="d-title" style="font-size: 34px; margin: 0 0 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);"></h1>
@@ -287,7 +283,7 @@
         const linksDB = {
             "شارع الأعشى 2": { 1: "//ok.ru/videoembed/11875516092673?nochat=1", 2: "//ok.ru/videoembed/11875531297025?nochat=1", 3: "//ok.ru/videoembed/11946725675265?nochat=1", 4: "//ok.ru/videoembed/11946738258177?nochat=1", 5: "//ok.ru/videoembed/11971203698945?nochat=1", 6: "//ok.ru/videoembed/11989770440961?nochat=1", 7: "https://ok.ru/videoembed/12022189134081?nochat=1" },
             "شباب البومب 14": { 1: "//ok.ru/videoembed/11876854206721?nochat=1", 2: "//ok.ru/videoembed/11946814673153?nochat=1", 3: "//ok.ru/videoembed/11921735815425?nochat=1", 4: "//ok.ru/videoembed/11970378338561?nochat=1", 5: "//ok.ru/videoembed/11984369094913?nochat=1", 6: "https://ok.ru/videoembed/12022187626753?nochat=1" },
-            "جاك العلم 3": { 1: "//ok.ru/videoembed/11876881666305?nochat=1", 2: "//ok.ru/videoembed/11973935173889?nochat=1", 3: "//ok.ru/videoembed/11946770305281?nochat=1", 4: "//ok.ru/videoembed/11970340262145?nochat=1", 5: "https://ok.ru/videoembed/12011138978049?nochat=1", 6: "https://ok.ru/videoembed/12022190051585?nochat=1" },
+            "جا العلم 3": { 1: "//ok.ru/videoembed/11876881666305?nochat=1", 2: "//ok.ru/videoembed/11973935173889?nochat=1", 3: "//ok.ru/videoembed/11946770305281?nochat=1", 4: "//ok.ru/videoembed/11970340262145?nochat=1", 5: "https://ok.ru/videoembed/12011138978049?nochat=1", 6: "https://ok.ru/videoembed/12022190051585?nochat=1" },
             "كحيلان": { 1: "//ok.ru/videoembed/11877259874561?nochat=1", 2: "//ok.ru/videoembed/11877271867649?nochat=1", 3: "//ok.ru/videoembed/11970915406081?nochat=1", 4: "//ok.ru/videoembed/11970925170945?nochat=1", 5: "//ok.ru/videoembed/11970940965121?nochat=1", 6: "//ok.ru/videoembed/11987720016129?nochat=1", 7: "https://ok.ru/videoembed/12022192673025?nochat=1" },
             "يوميات رجل متزوج": { 1: "//ok.ru/videoembed/11974492033281?nochat=1", 2: "//ok.ru/videoembed/11974505730305?nochat=1", 3: "//ok.ru/videoembed/11946786492673?nochat=1", 4: "//ok.ru/videoembed/11974558290177?nochat=1", 5: "//ok.ru/videoembed/11984286322945?nochat=1", 6: "https://ok.ru/videoembed/12017835249921?nochat=1" },
             "رامز ليڤل": { 1: "//ok.ru/videoembed/11971267989761?nochat=1", 2: "//ok.ru/videoembed/11971283194113?nochat=1", 3: "//ok.ru/videoembed/11971299053825?nochat=1", 4: "https://ok.ru/videoembed/12011033071873?nochat=1" },
@@ -553,11 +549,9 @@
             document.body.style.overflow = 'hidden';
             page.scrollTo({top: 0});
             
-            // دفع حالة جديدة للمتصفح لدعم زر الرجوع في الجوال
             history.pushState({ page: 'details' }, null, '');
         }
 
-        // الاستماع لزر الرجوع في الجوال
         window.addEventListener('popstate', function(event) {
             const page = document.getElementById('details-page');
             if (page.style.display === 'block') {
