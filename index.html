@@ -540,7 +540,22 @@
                 <span class="meta-tag">${data.genre}</span>
                 <span class="meta-tag">1080p HD</span>
                 <button id="add-list-btn" class="add-list-btn" onclick="toggleMyList('${data.name}')">➕ أضف لقائمتي</button>
-                <button id="fullscreen-btn" class="next-ep-btn" onclick="toggleFullscreen()" style="display:none; margin-top: 5px;">🔲 تكبير وقلب الشاشة</button>
+                        <!-- حاوية الأزرار تحت الفيديو -->
+        <div id="video-controls" style="display:none; justify-content: center; gap: 10px; margin: 15px 5%; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            
+            <button id="fullscreen-btn" onclick="toggleFullscreen()" style="flex: 1; background: transparent; color: white; border: none; font-family: 'Tajawal', sans-serif; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                تكبير الشاشة
+            </button>
+
+            <div style="width: 1px; background: rgba(255,255,255,0.2);"></div> <!-- خط فاصل أنيق -->
+
+            <button id="next-ep-btn" onclick="playNextEpisode()" style="flex: 1; background: transparent; color: var(--accent); border: none; font-family: 'Tajawal', sans-serif; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                الحلقة التالية
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+            </button>
+        </div>
+
             `;
             
             updateMyListBtn(data.name);
@@ -601,7 +616,7 @@
 
         function playVideo(url, el, epNum, seriesName) {
             document.getElementById('d-hero').style.display = 'none';
-            document.getElementById('fullscreen-btn').style.display = 'block';
+            document.getElementById('video-controls').style.display = 'flex';
             const container = document.getElementById('video-container');
             container.style.display = 'block';
             document.getElementById('video-frame').src = url;
@@ -655,7 +670,7 @@
 
         function closeDetails() {
             document.getElementById('video-frame').src = "";
-            document.getElementById('fullscreen-btn').style.display = 'none';
+            document.getElementById('video-controls').style.display = 'none';
             document.getElementById('details-page').style.display = 'none';
             document.body.style.overflow = 'auto';
             document.getElementById('searchInput').value = ""; 
@@ -663,25 +678,37 @@
             document.getElementById('back-btn').style.display = 'none';
         }
         
-        function toggleFullscreen() {
+            function toggleFullscreen() {
             const iframe = document.getElementById('video-frame');
             
-            // 1. أمر الدخول في وضع ملء الشاشة
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.webkitRequestFullscreen) { /* للايفون */
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) { /* انترنت اكسبلورر */
-                iframe.msRequestFullscreen();
-            }
-
-            // 2. أمر قلب الشاشة بالعرض (يعمل في أغلب أجهزة الأندرويد)
-            if (screen.orientation && screen.orientation.lock) {
-                screen.orientation.lock("landscape").catch(function(error) {
-                    console.log("متصفحك يمنع قلب الشاشة التلقائي.");
-                });
+            // التحقق: هل إحنا في وضع ملء الشاشة الآن؟
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                // أمر الدخول للتكبير
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                }
+                
+                // أمر قلب الشاشة بالعرض
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock("landscape").catch(err => console.log(err));
+                }
+            } else {
+                // أمر الخروج والتصغير
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+                
+                // إرجاع الشاشة للوضع العمودي
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
             }
         }
+
 
     </script> 
     
