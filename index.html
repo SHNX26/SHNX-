@@ -540,6 +540,7 @@
                 <span class="meta-tag">${data.genre}</span>
                 <span class="meta-tag">1080p HD</span>
                 <button id="add-list-btn" class="add-list-btn" onclick="toggleMyList('${data.name}')">➕ أضف لقائمتي</button>
+                <button id="fullscreen-btn" class="next-ep-btn" onclick="toggleFullscreen()" style="display:none; margin-top: 5px;">🔲 تكبير وقلب الشاشة</button>
             `;
             
             updateMyListBtn(data.name);
@@ -573,10 +574,12 @@
             container.innerHTML = "";
             
             const epData = linksDB[name] || {};
-            let maxEp = 30;
+                        let maxEp = 30; // الحد الأدنى الافتراضي
             const existingEps = Object.keys(epData).map(Number);
             if(existingEps.length > 0) {
-                maxEp = Math.max(30, ...existingEps); 
+                // يسحب أعلى رقم حلقة، وإذا كانت أكثر من 30 يعتمدها، ويزيدها للرقم العشري اللي بعده (مثلاً 82 تصير 90)
+                const highestEp = Math.max(...existingEps);
+                maxEp = highestEp > 30 ? Math.ceil(highestEp / 10) * 10 : 30; 
             }
 
             for (let i = 1; i <= maxEp; i++) {
@@ -598,6 +601,7 @@
 
         function playVideo(url, el, epNum, seriesName) {
             document.getElementById('d-hero').style.display = 'none';
+            document.getElementById('fullscreen-btn').style.display = 'block';
             const container = document.getElementById('video-container');
             container.style.display = 'block';
             document.getElementById('video-frame').src = url;
@@ -651,11 +655,32 @@
 
         function closeDetails() {
             document.getElementById('video-frame').src = "";
+            document.getElementById('fullscreen-btn').style.display = 'none';
             document.getElementById('details-page').style.display = 'none';
             document.body.style.overflow = 'auto';
             document.getElementById('searchInput').value = ""; 
             handleSearch();
             document.getElementById('back-btn').style.display = 'none';
+        }
+        
+        function toggleFullscreen() {
+            const iframe = document.getElementById('video-frame');
+            
+            // 1. أمر الدخول في وضع ملء الشاشة
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) { /* للايفون */
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { /* انترنت اكسبلورر */
+                iframe.msRequestFullscreen();
+            }
+
+            // 2. أمر قلب الشاشة بالعرض (يعمل في أغلب أجهزة الأندرويد)
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock("landscape").catch(function(error) {
+                    console.log("متصفحك يمنع قلب الشاشة التلقائي.");
+                });
+            }
         }
 
     </script> 
