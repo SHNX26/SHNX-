@@ -601,6 +601,7 @@
                 const link = epData[i];
                 const item = document.createElement('div');
                 item.className = "ep-item";
+                item.id = `ep-item-${i}`;
                 item.style.opacity = link ? "1" : "0.4";
                 item.innerHTML = `
                     <div class="ep-number">${i}</div>
@@ -611,6 +612,21 @@
                 `;
                 if(link) item.onclick = () => playVideo(link, item, i, name);
                 container.appendChild(item);
+
+                            // التمرير التلقائي لآخر حلقة شاهدها المستخدم
+            setTimeout(() => {
+                const continueData = localStorage.getItem('shnx_continue');
+                if (continueData) {
+                    const item = JSON.parse(continueData);
+                    if (item.name === name) {
+                        const activeEp = document.getElementById(`ep-item-${item.ep}`);
+                        if (activeEp) {
+                            activeEp.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                    }
+                }
+            }, 300);
+
             }
         }
 
