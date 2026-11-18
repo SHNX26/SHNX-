@@ -30,8 +30,20 @@
   <link rel="preconnect" href="https://opensheet.elk.sh" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    // الشعار المتحرك يطلع مرة وحدة بكل زيارة، وما يطلع لو الرابط يفتح مسلسل مباشرة
+    try {
+      if (sessionStorage.getItem('shnx_intro') || /[?&]s=/.test(location.search)) document.documentElement.classList.add('no-intro');
+    } catch (e) { document.documentElement.classList.add('no-intro'); }
+  </script>
 </head>
 <body>
+
+  <!-- الشعار المتحرك عند الدخول -->
+  <div id="intro" aria-hidden="true">
+    <div class="intro-logo"><span>S</span><span>H</span><span>N</span><span>X</span></div>
+    <div class="intro-line"></div>
+  </div>
 
   <!-- الهيدر -->
   <header class="topbar" id="topbar">
@@ -96,6 +108,7 @@
 
   <!-- صفحة تفاصيل المسلسل -->
   <div id="details" class="details" hidden role="dialog" aria-modal="true" aria-labelledby="d-title">
+    <div class="d-ambient" id="d-ambient" aria-hidden="true"></div>
     <div class="d-topbar" id="d-topbar">
       <button type="button" class="back-btn" id="back-btn" aria-label="رجوع">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
@@ -127,9 +140,9 @@
     <div class="d-hero" id="d-hero"></div>
 
     <div class="d-info" id="d-info">
-      <h1 class="d-title" id="d-title"></h1>
-      <div class="d-meta" id="d-meta"></div>
-      <div class="d-actions">
+      <h1 class="d-title rv" id="d-title" style="--rv:0"></h1>
+      <div class="d-meta rv" id="d-meta" style="--rv:1"></div>
+      <div class="d-actions rv" style="--rv:2">
         <button type="button" class="btn btn-primary" id="d-play">▶ تشغيل</button>
         <button type="button" class="btn btn-ghost" id="d-mylist">＋ قائمتي</button>
         <button type="button" class="btn btn-ghost btn-icon" id="d-share" aria-label="مشاركة">
@@ -137,11 +150,18 @@
           مشاركة
         </button>
       </div>
-      <p class="d-desc" id="d-desc"></p>
+      <p class="d-desc rv" id="d-desc" style="--rv:3"></p>
 
-      <div class="ep-head">
+      <div class="ep-head rv" style="--rv:4">
         <h3>الحلقات</h3>
+        <button type="button" class="view-toggle" id="ep-view-btn" aria-label="تبديل طريقة عرض الحلقات">
+          <svg class="ic-grid" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <svg class="ic-list" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+        </button>
+      </div>
+      <div class="ep-tools rv" id="ep-tools" style="--rv:5">
         <div class="season-tabs" id="season-tabs" role="tablist" aria-label="المواسم"></div>
+        <div class="range-bar" id="range-bar" aria-label="انتقال سريع للحلقات"></div>
       </div>
       <div class="ep-list" id="d-episodes"></div>
     </div>
@@ -149,6 +169,7 @@
 
   <!-- الشريط السفلي للجوال -->
   <nav class="bottom-nav" id="bottom-nav" aria-label="التنقل">
+    <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
     <button type="button" data-nav="home" class="active">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
       <span>الرئيسية</span>
